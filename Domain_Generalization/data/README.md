@@ -19,4 +19,6 @@
   #Then store all your data folders under this path
   ```
   <img src="https://user-images.githubusercontent.com/39040787/115491263-3a2ec280-a292-11eb-9915-14796de94acb.png" width="200" height="400"/><br/>
-* 
+  
+ # data samples' `path2label.txt` stored in `correct_txt_lists`
+ 
