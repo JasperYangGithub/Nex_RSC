@@ -10,3 +10,14 @@
   * get_train_transformers(args): -> transforms(img), transforms(label)
   * get_val_transformer(args): -> transforms
   * get_nex_val_transformer(args): -> transforms #different mean and std norm
+
+# Dataset Path
+* `batch2, batch3, Jul/Augu/Sep...(downsampled)` need stored in `data\kfold`
+  ```
+  #If not exists 'data/kfold':
+  mkdir data/kfold
+  #Then store all your data folders under this path
+  ```
+  截屏2021-04-21 上午11.10.36![image](https://user-images.githubusercontent.com/39040787/115491263-3a2ec280-a292-11eb-9915-14796de94acb.png)
+
+* 
