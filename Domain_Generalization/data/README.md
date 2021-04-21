@@ -18,5 +18,5 @@
   mkdir data/kfold
   #Then store all your data folders under this path
   ```
-  <img src="https://user-images.githubusercontent.com/39040787/115491263-3a2ec280-a292-11eb-9915-14796de94acb.png" width="200" height="200"/><br/>
+  <img src="https://user-images.githubusercontent.com/39040787/115491263-3a2ec280-a292-11eb-9915-14796de94acb.png" width="200" height="400"/><br/>
 * 
