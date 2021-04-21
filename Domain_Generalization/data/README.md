@@ -18,6 +18,5 @@
   mkdir data/kfold
   #Then store all your data folders under this path
   ```
-  截屏2021-04-21 上午11.10.36![image](https://user-images.githubusercontent.com/39040787/115491263-3a2ec280-a292-11eb-9915-14796de94acb.png)
-
+  <img src="https://user-images.githubusercontent.com/39040787/115491263-3a2ec280-a292-11eb-9915-14796de94acb.png" width="200" height="200"/><br/>
 * 
