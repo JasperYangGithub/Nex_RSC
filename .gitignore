@@ -5,3 +5,4 @@ Domain_Generalization/data/imbalance10_txt_lists/
 Domain_Generalization/data/imbalance50_txt_lists/
 Domain_Generalization/data/imbalance1000_txt_lists/
 core
+Domain_Generalization/logs

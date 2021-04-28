@@ -6,7 +6,6 @@ from .tf_logger import TFLogger
 
 _log_path = join(dirname(__file__), '../logs')
 
-
 # high level wrapper for tf_logger.TFLogger
 class Logger():
     def __init__(self, args, update_frequency=10):

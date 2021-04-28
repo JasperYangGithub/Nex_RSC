@@ -21,7 +21,7 @@ pacs_datasets = ["art_painting", "cartoon", "photo", "sketch"]
 office_datasets = ["amazon", "dslr", "webcam"]
 digits_datasets = [mnist, mnist, svhn, usps]
 nex_datasets=['Jul','Augu','Sep','Oct','Nov','Dec','batch_2','batch_3',]
-new_nex_datasets = ['Nex_trainingset','Jan2021_Restore','Feb2021_Restore','Mar2021_Restore']
+new_nex_datasets = ['Nex_trainingset','Jan2021','Feb2021','Mar2021']
 available_datasets = office_datasets + pacs_datasets + vlcs_datasets + digits_datasets + nex_datasets + new_nex_datasets
 #office_paths = {dataset: "/home/enoon/data/images/office/%s" % dataset for dataset in office_datasets}
 #pacs_paths = {dataset: "/home/enoon/data/images/PACS/kfold/%s" % dataset for dataset in pacs_datasets}
@@ -68,11 +68,11 @@ def get_train_dataloader(args, patches):
     limit = args.limit_source
     for dname in dataset_list:
         if dname in new_nex_datasets:
-            index_root = data_root = '/import/home/share/from_Nexperia_April2021/'
+            index_root = data_root = '/import/home/share/from_Nexperia_April2021/%s' % dname
         else:
             index_root = join(dirname(__file__),'correct_txt_lists')
             data_root = join(dirname(__file__),'kfold')
-        name_train, labels_train = _dataset_info(join(index_root,"%s_train.txt" % dname))
+        name_train, labels_train = _dataset_info(join(index_root, "%s_train.txt" % dname))
         name_val, labels_val = _dataset_info(join(index_root, "%s_val.txt" % dname))
         train_dataset = JigsawNewDataset(data_root, name_train, labels_train, patches=patches, img_transformer=img_transformer,
                             tile_transformer=tile_transformer, jig_classes=30, bias_whole_image=args.bias_whole_image)
@@ -90,7 +90,7 @@ def get_train_dataloader(args, patches):
 def get_val_dataloader(args, patches=False):
     dname = args.target
     if dname in new_nex_datasets:
-        index_root = data_root = '/import/home/share/from_Nexperia_April2021/'
+        index_root = data_root = '/import/home/share/from_Nexperia_April2021/%s' % dname
     else:
         index_root = join(dirname(__file__),'correct_txt_lists')
         data_root = join(dirname(__file__),'kfold')
@@ -111,13 +111,18 @@ def get_tgt_dataloader(args, patches=False):
     img_tr = get_nex_val_transformer(args)
     dname = args.target
     if dname in new_nex_datasets:
-        index_root = data_root = '/import/home/share/from_Nexperia_April2021/'
+        index_root = data_root = '/import/home/share/from_Nexperia_April2021/%s' % dname
     else:
         index_root = join(dirname(__file__),'correct_txt_lists')
         data_root = join(dirname(__file__),'kfold')
-    name_train, labels_train = _dataset_info(join(index_root,"%s_train.txt" % dname))
-    name_val, labels_val = _dataset_info(join(index_root, "%s_val.txt" % dname))
-    name_test, labels_test = _dataset_info(join(index_root, "%s_test.txt" % dname))
+    if args.downsample_target:
+        name_train, labels_train = _dataset_info(join(index_root,"%s_train_down.txt" % dname))
+        name_val, labels_val = _dataset_info(join(index_root, "%s_val_down.txt" % dname))
+        name_test, labels_test = _dataset_info(join(index_root, "%s_test_down.txt" % dname))
+    else:
+        name_train, labels_train = _dataset_info(join(index_root,"%s_train.txt" % dname))
+        name_val, labels_val = _dataset_info(join(index_root, "%s_val.txt" % dname))
+        name_test, labels_test = _dataset_info(join(index_root, "%s_test.txt" % dname))
 
     tgt_train_dataset = JigsawTestNewDataset(data_root, name_train, labels_train, patches=patches, img_transformer=img_tr,jig_classes=30)
     tgt_val_dataset = JigsawTestNewDataset(data_root, name_val, labels_val, patches=patches, img_transformer=img_tr,

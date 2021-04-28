@@ -1,0 +1,183 @@
+Environment:
+	Num of Epochs: 200
+	Batch Size: 32
+	Backbone: resnet50
+	Using RSC: True
+	Using Pretrained: False
+Source domains: Nex_trainingset
+Target domain: Jan2021
+Current use cuda:1
+Dataset size: train 24783, val 3110, test 12051
+Step size: 160
+0/774 of epoch 0/200 loss : 4.534 - acc class : 0.00 [bs:64]
+50/774 of epoch 0/200 loss : 1.337 - acc class : 46.88 [bs:64]
+100/774 of epoch 0/200 loss : 1.046 - acc class : 70.31 [bs:64]
+150/774 of epoch 0/200 loss : 0.700 - acc class : 60.94 [bs:64]
+200/774 of epoch 0/200 loss : 0.866 - acc class : 43.75 [bs:64]
+250/774 of epoch 0/200 loss : 0.580 - acc class : 76.56 [bs:64]
+300/774 of epoch 0/200 loss : 0.536 - acc class : 75.00 [bs:64]
+350/774 of epoch 0/200 loss : 0.469 - acc class : 73.44 [bs:64]
+400/774 of epoch 0/200 loss : 0.530 - acc class : 76.56 [bs:64]
+450/774 of epoch 0/200 loss : 0.531 - acc class : 78.12 [bs:64]
+500/774 of epoch 0/200 loss : 0.574 - acc class : 73.44 [bs:64]
+550/774 of epoch 0/200 loss : 0.528 - acc class : 64.06 [bs:64]
+600/774 of epoch 0/200 loss : 0.703 - acc class : 75.00 [bs:64]
+650/774 of epoch 0/200 loss : 0.710 - acc class : 59.38 [bs:64]
+700/774 of epoch 0/200 loss : 0.511 - acc class : 71.88 [bs:64]
+750/774 of epoch 0/200 loss : 0.496 - acc class : 78.12 [bs:64]
+Accuracies on val: class_acc : 30.26
+Accuracies on val: auc : 37.66
+Accuracies on val: fpr_980 : 100.00
+Accuracies on val: fpr_991 : 100.00
+=>Best1 model updated and saved in path /home/hcaoaf/github/RSC/Domain_Generalization/save_models/tgt_Jan2021_src_Nex_trainingset_RSC_True_best1.pth
+Accuracies on test: class_acc : 6.74
+Accuracies on test: auc : 43.63
+Accuracies on test: fpr_980 : 98.94
+Accuracies on test: fpr_991 : 99.58
+New epoch - lr: 0.01
+0/774 of epoch 1/200 loss : 0.430 - acc class : 75.00 [bs:64]
+50/774 of epoch 1/200 loss : 0.459 - acc class : 76.56 [bs:64]
+100/774 of epoch 1/200 loss : 0.388 - acc class : 75.00 [bs:64]
+150/774 of epoch 1/200 loss : 0.538 - acc class : 60.94 [bs:64]
+200/774 of epoch 1/200 loss : 0.788 - acc class : 59.38 [bs:64]
+250/774 of epoch 1/200 loss : 0.622 - acc class : 59.38 [bs:64]
+300/774 of epoch 1/200 loss : 1.194 - acc class : 51.56 [bs:64]
+350/774 of epoch 1/200 loss : 0.476 - acc class : 68.75 [bs:64]
+400/774 of epoch 1/200 loss : 0.481 - acc class : 78.12 [bs:64]
+450/774 of epoch 1/200 loss : 0.334 - acc class : 73.44 [bs:64]
+500/774 of epoch 1/200 loss : 0.301 - acc class : 78.12 [bs:64]
+550/774 of epoch 1/200 loss : 0.489 - acc class : 70.31 [bs:64]
+600/774 of epoch 1/200 loss : 0.569 - acc class : 71.88 [bs:64]
+650/774 of epoch 1/200 loss : 0.357 - acc class : 78.12 [bs:64]
+700/774 of epoch 1/200 loss : 0.499 - acc class : 75.00 [bs:64]
+750/774 of epoch 1/200 loss : 0.773 - acc class : 53.12 [bs:64]
+Accuracies on val: class_acc : 30.32
+Accuracies on val: auc : 48.14
+Accuracies on val: fpr_980 : 100.00
+Accuracies on val: fpr_991 : 100.00
+=>Best1 model updated and saved in path /home/hcaoaf/github/RSC/Domain_Generalization/save_models/tgt_Jan2021_src_Nex_trainingset_RSC_True_best1.pth
+Accuracies on test: class_acc : 7.20
+Accuracies on test: auc : 49.81
+Accuracies on test: fpr_980 : 96.95
+Accuracies on test: fpr_991 : 98.57
+New epoch - lr: 0.01
+0/774 of epoch 2/200 loss : 0.385 - acc class : 65.62 [bs:64]
+50/774 of epoch 2/200 loss : 0.619 - acc class : 62.50 [bs:64]
+100/774 of epoch 2/200 loss : 0.789 - acc class : 59.38 [bs:64]
+150/774 of epoch 2/200 loss : 0.452 - acc class : 68.75 [bs:64]
+200/774 of epoch 2/200 loss : 0.462 - acc class : 67.19 [bs:64]
+250/774 of epoch 2/200 loss : 0.408 - acc class : 71.88 [bs:64]
+300/774 of epoch 2/200 loss : 0.472 - acc class : 75.00 [bs:64]
+350/774 of epoch 2/200 loss : 0.460 - acc class : 78.12 [bs:64]
+400/774 of epoch 2/200 loss : 0.614 - acc class : 62.50 [bs:64]
+450/774 of epoch 2/200 loss : 0.549 - acc class : 67.19 [bs:64]
+500/774 of epoch 2/200 loss : 0.498 - acc class : 78.12 [bs:64]
+550/774 of epoch 2/200 loss : 0.564 - acc class : 65.62 [bs:64]
+600/774 of epoch 2/200 loss : 0.520 - acc class : 64.06 [bs:64]
+650/774 of epoch 2/200 loss : 0.381 - acc class : 65.62 [bs:64]
+700/774 of epoch 2/200 loss : 0.523 - acc class : 59.38 [bs:64]
+750/774 of epoch 2/200 loss : 0.645 - acc class : 62.50 [bs:64]
+Accuracies on val: class_acc : 30.35
+Accuracies on val: auc : 48.74
+Accuracies on val: fpr_980 : 100.00
+Accuracies on val: fpr_991 : 100.00
+=>Best1 model updated and saved in path /home/hcaoaf/github/RSC/Domain_Generalization/save_models/tgt_Jan2021_src_Nex_trainingset_RSC_True_best1.pth
+Accuracies on test: class_acc : 7.37
+Accuracies on test: auc : 48.20
+Accuracies on test: fpr_980 : 97.44
+Accuracies on test: fpr_991 : 98.47
+New epoch - lr: 0.01
+0/774 of epoch 3/200 loss : 0.740 - acc class : 65.62 [bs:64]
+50/774 of epoch 3/200 loss : 0.492 - acc class : 65.62 [bs:64]
+100/774 of epoch 3/200 loss : 0.429 - acc class : 75.00 [bs:64]
+150/774 of epoch 3/200 loss : 0.195 - acc class : 84.38 [bs:64]
+200/774 of epoch 3/200 loss : 0.517 - acc class : 71.88 [bs:64]
+250/774 of epoch 3/200 loss : 0.518 - acc class : 85.94 [bs:64]
+300/774 of epoch 3/200 loss : 0.388 - acc class : 78.12 [bs:64]
+350/774 of epoch 3/200 loss : 0.650 - acc class : 62.50 [bs:64]
+400/774 of epoch 3/200 loss : 1.212 - acc class : 53.12 [bs:64]
+450/774 of epoch 3/200 loss : 0.418 - acc class : 71.88 [bs:64]
+500/774 of epoch 3/200 loss : 0.656 - acc class : 53.12 [bs:64]
+550/774 of epoch 3/200 loss : 0.336 - acc class : 90.62 [bs:64]
+600/774 of epoch 3/200 loss : 0.389 - acc class : 81.25 [bs:64]
+650/774 of epoch 3/200 loss : 0.508 - acc class : 71.88 [bs:64]
+700/774 of epoch 3/200 loss : 0.415 - acc class : 78.12 [bs:64]
+750/774 of epoch 3/200 loss : 0.454 - acc class : 75.00 [bs:64]
+Accuracies on val: class_acc : 32.28
+Accuracies on val: auc : 48.79
+Accuracies on val: fpr_980 : 100.00
+Accuracies on val: fpr_991 : 100.00
+=>Best1 model updated and saved in path /home/hcaoaf/github/RSC/Domain_Generalization/save_models/tgt_Jan2021_src_Nex_trainingset_RSC_True_best1.pth
+Accuracies on test: class_acc : 7.59
+Accuracies on test: auc : 46.57
+Accuracies on test: fpr_980 : 97.36
+Accuracies on test: fpr_991 : 98.51
+New epoch - lr: 0.01
+0/774 of epoch 4/200 loss : 0.412 - acc class : 76.56 [bs:64]
+50/774 of epoch 4/200 loss : 0.526 - acc class : 59.38 [bs:64]
+100/774 of epoch 4/200 loss : 0.252 - acc class : 81.25 [bs:64]
+150/774 of epoch 4/200 loss : 0.344 - acc class : 71.88 [bs:64]
+200/774 of epoch 4/200 loss : 0.804 - acc class : 54.69 [bs:64]
+250/774 of epoch 4/200 loss : 0.509 - acc class : 70.31 [bs:64]
+300/774 of epoch 4/200 loss : 0.671 - acc class : 53.12 [bs:64]
+350/774 of epoch 4/200 loss : 0.466 - acc class : 64.06 [bs:64]
+400/774 of epoch 4/200 loss : 0.331 - acc class : 81.25 [bs:64]
+450/774 of epoch 4/200 loss : 0.198 - acc class : 90.62 [bs:64]
+500/774 of epoch 4/200 loss : 0.640 - acc class : 68.75 [bs:64]
+550/774 of epoch 4/200 loss : 0.335 - acc class : 81.25 [bs:64]
+600/774 of epoch 4/200 loss : 0.587 - acc class : 54.69 [bs:64]
+650/774 of epoch 4/200 loss : 0.406 - acc class : 71.88 [bs:64]
+700/774 of epoch 4/200 loss : 0.320 - acc class : 81.25 [bs:64]
+750/774 of epoch 4/200 loss : 0.405 - acc class : 70.31 [bs:64]
+Accuracies on val: class_acc : 47.78
+Accuracies on val: auc : 56.35
+Accuracies on val: fpr_980 : 100.00
+Accuracies on val: fpr_991 : 100.00
+=>Best1 model updated and saved in path /home/hcaoaf/github/RSC/Domain_Generalization/save_models/tgt_Jan2021_src_Nex_trainingset_RSC_True_best1.pth
+Accuracies on test: class_acc : 7.63
+Accuracies on test: auc : 50.06
+Accuracies on test: fpr_980 : 94.69
+Accuracies on test: fpr_991 : 97.53
+New epoch - lr: 0.01
+0/774 of epoch 5/200 loss : 0.513 - acc class : 82.81 [bs:64]
+50/774 of epoch 5/200 loss : 0.310 - acc class : 75.00 [bs:64]
+100/774 of epoch 5/200 loss : 0.779 - acc class : 62.50 [bs:64]
+150/774 of epoch 5/200 loss : 0.569 - acc class : 68.75 [bs:64]
+200/774 of epoch 5/200 loss : 0.245 - acc class : 82.81 [bs:64]
+250/774 of epoch 5/200 loss : 0.505 - acc class : 71.88 [bs:64]
+300/774 of epoch 5/200 loss : 0.233 - acc class : 82.81 [bs:64]
+350/774 of epoch 5/200 loss : 0.302 - acc class : 76.56 [bs:64]
+400/774 of epoch 5/200 loss : 0.215 - acc class : 85.94 [bs:64]
+450/774 of epoch 5/200 loss : 0.539 - acc class : 64.06 [bs:64]
+500/774 of epoch 5/200 loss : 0.616 - acc class : 57.81 [bs:64]
+550/774 of epoch 5/200 loss : 0.277 - acc class : 81.25 [bs:64]
+600/774 of epoch 5/200 loss : 0.496 - acc class : 64.06 [bs:64]
+650/774 of epoch 5/200 loss : 0.421 - acc class : 75.00 [bs:64]
+700/774 of epoch 5/200 loss : 0.569 - acc class : 73.44 [bs:64]
+750/774 of epoch 5/200 loss : 0.296 - acc class : 81.25 [bs:64]
+Accuracies on val: class_acc : 39.39
+Accuracies on val: auc : 63.25
+Accuracies on val: fpr_980 : 96.15
+Accuracies on val: fpr_991 : 96.15
+=>Best1 model updated and saved in path /home/hcaoaf/github/RSC/Domain_Generalization/save_models/tgt_Jan2021_src_Nex_trainingset_RSC_True_best1.pth
+Accuracies on test: class_acc : 0.25
+Accuracies on test: auc : 42.33
+Accuracies on test: fpr_980 : 99.18
+Accuracies on test: fpr_991 : 99.66
+New epoch - lr: 0.01
+0/774 of epoch 6/200 loss : 0.445 - acc class : 75.00 [bs:64]
+50/774 of epoch 6/200 loss : 0.295 - acc class : 79.69 [bs:64]
+100/774 of epoch 6/200 loss : 0.279 - acc class : 78.12 [bs:64]
+150/774 of epoch 6/200 loss : 0.635 - acc class : 71.88 [bs:64]
+200/774 of epoch 6/200 loss : 0.233 - acc class : 84.38 [bs:64]
+250/774 of epoch 6/200 loss : 0.294 - acc class : 82.81 [bs:64]
+300/774 of epoch 6/200 loss : 0.492 - acc class : 67.19 [bs:64]
+350/774 of epoch 6/200 loss : 0.390 - acc class : 81.25 [bs:64]
+400/774 of epoch 6/200 loss : 0.185 - acc class : 90.62 [bs:64]
+450/774 of epoch 6/200 loss : 0.425 - acc class : 87.50 [bs:64]
+500/774 of epoch 6/200 loss : 0.404 - acc class : 76.56 [bs:64]
+550/774 of epoch 6/200 loss : 0.527 - acc class : 76.56 [bs:64]
+600/774 of epoch 6/200 loss : 0.299 - acc class : 87.50 [bs:64]
+650/774 of epoch 6/200 loss : 0.333 - acc class : 78.12 [bs:64]
+700/774 of epoch 6/200 loss : 0.273 - acc class : 85.94 [bs:64]
+750/774 of epoch 6/200 loss : 0.156 - acc class : 87.50 [bs:64]
