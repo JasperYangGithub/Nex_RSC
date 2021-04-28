@@ -1,0 +1,6 @@
+Domain_Generalization/data/kfold/
+Domain_Generalization/save_models/
+Domain_Generalization/data/imbalance1_txt_lists/
+Domain_Generalization/data/imbalance10_txt_lists/
+Domain_Generalization/data/imbalance50_txt_lists/
+Domain_Generalization/data/imbalance1000_txt_lists/

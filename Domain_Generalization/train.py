@@ -31,7 +31,6 @@ def get_args():
     parser.add_argument("--target", choices=available_datasets, help="Target")
     parser.add_argument("--batch_size", "-b", type=int, default=64, help="Batch size")
     parser.add_argument("--image_size", type=int, default=222, help="Image size")
-    parser.add_argument("--imbalance_ratio", type=int, default=10, help="Construct different imbalance ratio dataset. Original Imbalance Ratio=1000:1. Default=10:1")
     # data aug stuff
     parser.add_argument("--min_scale", default=0.8, type=float, help="Minimum scale percent")
     parser.add_argument("--max_scale", default=1.0, type=float, help="Maximum scale percent")
@@ -152,9 +151,7 @@ class Trainer:
                     self.best_res['fpr_980'] = auc_dict['fpr_980']
                     if self.args.save_model:
                         self.save_model(epoch, auc_dict, save_best=True)
-                # if phase=='test' and epoch == self.args.epochs:
-                #     if self.args.save_model:
-                #         self.save_model(epoch, auc_dict, save_latest=True)
+
 
     def do_test(self, loader):
         class_correct = 0

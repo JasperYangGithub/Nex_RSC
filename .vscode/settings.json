@@ -1,0 +1,7 @@
+{
+    "python.pythonPath": "/usr/local/anaconda3/bin/python",
+    "git.ignoreLimitWarning": true,
+    "python.analysis.extraPaths": [
+        "Domain_Generalization"
+    ]
+}
