@@ -31,7 +31,6 @@ def get_args():
     parser.add_argument("--target", choices=available_datasets, help="Target")
     parser.add_argument("--batch_size", "-b", type=int, default=64, help="Batch size")
     parser.add_argument("--image_size", type=int, default=222, help="Image size")
-    parser.add_argument("--imbalance_ratio", type=int, default=10, help="Construct different imbalance ratio dataset. Original Imbalance Ratio=1000:1. Default=10:1")
     # data aug stuff
     parser.add_argument("--min_scale", default=0.8, type=float, help="Minimum scale percent")
     parser.add_argument("--max_scale", default=1.0, type=float, help="Maximum scale percent")
@@ -45,6 +44,7 @@ def get_args():
                         help="If set, it will limit the number of training samples")
     parser.add_argument("--limit_target", default=None, type=int,
                         help="If set, it will limit the number of testing samples")
+    parser.add_argument("--downsample_target", action='store_true', help="Use downsampled target to evaluate")
     parser.add_argument("--learning_rate", "-l", type=float, default=.01, help="Learning rate")
     parser.add_argument("--epochs", "-e", type=int, default=20, help="Number of epochs")
     parser.add_argument("--start_epoch", type=int, default=0, metavar='N',
@@ -92,7 +92,8 @@ class Trainer:
                 raise ValueError(f"Failed to find checkpoint {args.resume}")
                 
         self.source_loader, self.val_loader = data_helper.get_train_dataloader(args, patches=model.is_patch_based())
-        self.target_loader = data_helper.get_val_dataloader(args, patches=model.is_patch_based())
+        # self.target_loader = data_helper.get_val_dataloader(args, patches=model.is_patch_based())
+        self.target_loader = data_helper.get_tgt_dataloader(self.args, patches=model.is_patch_based())
         self.test_loaders = {"val": self.val_loader, "test": self.target_loader}
         self.len_dataloader = len(self.source_loader)
         print("Dataset size: train %d, val %d, test %d" % (
@@ -105,7 +106,7 @@ class Trainer:
             print(args.source)
         else:
             self.target_id = None
-        self.best_res = {'class_acc':0.0, 'auc':0.0, 'fpr_980':100.0, 'tpr_991':100.0}
+        self.topk = [0 for _ in range(3)]
 
     def _do_epoch(self, epoch=None):
         if self.args.loss == 'ce':
@@ -147,14 +148,11 @@ class Trainer:
                 self.logger.log_test(phase, {"fpr_991": auc_dict['fpr_991']})
                 self.results[phase][self.current_epoch] = class_acc
                     
-                #save best/latest model params
-                if phase == 'test' and auc_dict['fpr_980'] < self.best_res['fpr_980']:
-                    self.best_res['fpr_980'] = auc_dict['fpr_980']
-                    if self.args.save_model:
-                        self.save_model(epoch, auc_dict, save_best=True)
-                # if phase=='test' and epoch == self.args.epochs:
-                #     if self.args.save_model:
-                #         self.save_model(epoch, auc_dict, save_latest=True)
+                #save best&latest model params
+                if phase == 'val':
+                    self.save_model(epoch, auc_dict)
+                del auc_dict
+
 
     def do_test(self, loader):
         class_correct = 0
@@ -178,9 +176,9 @@ class Trainer:
         self.logger = Logger(self.args, update_frequency=50)
         self.results = {"val": torch.zeros(self.args.epochs), "test": torch.zeros(self.args.epochs)}
         for self.current_epoch in range(self.args.start_epoch, self.args.epochs):
+            self._do_epoch(self.current_epoch)
             self.scheduler.step()
             self.logger.new_epoch(self.scheduler.get_last_lr())
-            self._do_epoch(self.current_epoch)
         val_res = self.results["val"]
         test_res = self.results["test"]
         idx_best = val_res.argmax()
@@ -188,19 +186,64 @@ class Trainer:
         val_res.max(), test_res[idx_best], test_res.max(), idx_best))
         self.logger.save_best(test_res[idx_best], test_res.max())
         return self.logger, self.model
-    
-    def save_model(self,epoch,auc_dict,save_best=False,save_latest=False):
-        if not exists(_save_models_dir):
-            os.mkdir(_save_models_dir)
-        state = {'model':self.model.state_dict(), 'auc_dict':auc_dict, 'epoch':epoch}
-        if save_best:
-            model_saved_path = join(_save_models_dir,f"tgt_{self.args.target}_src_{'-'.join(self.args.source)}_epochs{self.args.epochs}_RSC_{self.args.RSC_flag}_pretrained_{self.args.pretrained}_{self.args.loss}_best.pth")
-            torch.save(state, model_saved_path)
-            print(f'=>Best model updated and saved in path {model_saved_path}')
-        elif save_latest:
-            model_saved_path = join(_save_models_dir, f"tgt_{self.args.target}_src_{'-'.join(self.args.source)}_epochs{self.args.epochs}_RSC_{self.args.RSC_flag}_pretrained_{self.args.pretrained}_{self.args.loss}_latest.pth")
-            torch.save(state, model_saved_path)
-            print(f'=>Latest model updated and saved in path {model_saved_path}')
+
+    # def save_model(self,epoch, auc_dict):
+    #     if not exists(_save_models_dir): os.mkdir(_save_models_dir)
+    #     state_to_save = {'model':self.model.state_dict(), 'auc_dict':auc_dict, 'epoch':epoch}
+    #     tmp_auc, tmp_fpr_980 = auc_dict['auc'], auc_dict['fpr_980']
+    #     best1,best2,best3 = self.moving_record['best1'],self.moving_record['best2'],self.moving_record['best3']
+    #     best1_path, best2_path, best3_path = (join(_save_models_dir, f"tgt_{self.args.target}_src_{'-'.join(self.args.source)}_RSC_{self.args.RSC_flag}_best{_}.pth") for _ in [1,2,3])
+    #     #resort top3
+    #     update_pos = -1
+    #     if tmp_auc>best1['auc']:
+    #         best3['auc'], best3['fpr_980'] = best2['auc'], best2['fpr_980']
+    #         best2['auc'], best2['fpr_980'] = best1['auc'], best1['fpr_980']
+    #         best1['auc'], best1['fpr_980'] = tmp_auc, tmp_fpr_980
+    #         if exists(best2_path) and exists(best3_path):
+    #             os.rename(best2_path, best3_path)
+    #         if exists(best1_path) and exists(best2_path):
+    #             os.rename(best1_path, best2_path)
+    #         update_pos = 1
+    #     elif best2['auc']< tmp_auc < best1['auc']:
+    #         best3['auc'], best3['fpr_980'] = best2['auc'], best2['fpr_980']
+    #         best2['auc'], best2['fpr_980'] = tmp_auc, tmp_fpr_980
+    #         if exists(best2_path) and exists(best3_path):
+    #             os.rename(best2_path, best3_path)
+    #         update_pos = 2
+    #     elif best3['auc']< tmp_auc < best2['auc']:
+    #         best3['auc'], best3['fpr_980'] = tmp_auc, tmp_fpr_980
+    #         update_pos = 3
+        
+    #     if update_pos in [1,2,3]:
+    #         model_saved_path = join(_save_models_dir, f"tgt_{self.args.target}_src_{'-'.join(self.args.source)}_RSC_{self.args.RSC_flag}_best{update_pos}.pth")
+    #         torch.save(state_to_save, model_saved_path)
+    #         print(f'=>Best{update_pos} model updated and saved in path {model_saved_path}')
+    #     if epoch in range(self.args.epochs-3, self.args.epochs):
+    #         model_saved_path = join(_save_models_dir, f"tgt_{self.args.target}_src_{'-'.join(self.args.source)}_RSC_{self.args.RSC_flag}_epochs{epoch}.pth")
+    #         torch.save(state_to_save, model_saved_path)
+    #         print(f'=>Last{self.args.epochs - epoch} model updated and saved in path {model_saved_path}')
+    def save_model(self,epoch,auc_dict):
+        if not exists(_save_models_dir): os.mkdir(_save_models_dir)
+        tmp_auc, tmp_fpr_980 = auc_dict['auc'], auc_dict['fpr_980']
+        for i,rec in enumerate(self.topk):
+            if tmp_auc > rec:
+                for j in range(len(self.topk)-1,i,-1):
+                    self.topk[j] = self.topk[j-1]
+                    _j, _jm1 = join(_save_models_dir, f"tgt_{self.args.target}_src_{'-'.join(self.args.source)}_RSC_{self.args.RSC_flag}_best{j+1}.pth"),\
+                    join(_save_models_dir, f"tgt_{self.args.target}_src_{'-'.join(self.args.source)}_RSC_{self.args.RSC_flag}_best{j}.pth")
+                    if exists(_jm1):
+                        os.rename(_jm1,_j)
+                self.topk[i] = tmp_auc
+                model_saved_path = join(_save_models_dir, f"tgt_{self.args.target}_src_{'-'.join(self.args.source)}_RSC_{self.args.RSC_flag}_best{i+1}.pth")
+                state_to_save = {'model':self.model.state_dict(), 'auc_dict':auc_dict, 'epoch':epoch}
+                torch.save(state_to_save, model_saved_path)
+                print(f'=>Best{i+1} model updated and saved in path {model_saved_path}')
+                break
+
+        if epoch in range(self.args.epochs-3, self.args.epochs):
+            model_saved_path = join(_save_models_dir, f"tgt_{self.args.target}_src_{'-'.join(self.args.source)}_RSC_{self.args.RSC_flag}_epochs{epoch}.pth")
+            torch.save(state_to_save, model_saved_path)
+            print(f'=>Last{self.args.epochs - epoch} model updated and saved in path {model_saved_path}')
 
 class Infer:
     def __init__(self,args,device):
@@ -245,7 +288,8 @@ class Infer:
             self.logger.log_test('Inference Result', {'auc':auc_dict['auc']})
             self.logger.log_test('Inference Result', {'fpr_980':auc_dict['fpr_980']})
             self.logger.log_test('Inference Result', {'fpr_991':auc_dict['fpr_991']})
-    
+            del auc_dict
+
     def do_test(self, loader):
         class_correct = 0
         auc_meter = AUCMeter()
